@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MobileApp.ViewModels"
+             xmlns:models="clr-namespace:MobileApp.Models"
+             x:DataType="viewModels:MainViewModel"             
+             x:Class="MobileApp.MainPage">
+
+
+    <Grid RowDefinitions="80, auto, *, 60" ColumnDefinitions=".75*, .25*" ColumnSpacing="10" RowSpacing="50" Margin="20">
+        <Image Source="dotnet_bot.svg" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center" />
+
+        <Entry Text="{Binding Text}" Grid.Row="1" Grid.Column="0" Placeholder="Ange en aktivitet..." />
+        <Button Text="Lägg Till" Command="{Binding AddCommand}" Grid.Row="1" Grid.Column="1" />
+
+        <CollectionView ItemsSource="{Binding Items}" Grid.Row="2" Grid.ColumnSpan="2" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type models:Todo}">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Ta bort" 
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=DeleteCommand}" />
+                                
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="0, 5">
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer                                             
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=TapCommand}" />
+                                </Frame.GestureRecognizers>
+                                <Grid RowDefinitions="auto, auto">
+                                    <Label Grid.Row="0" Text="{Binding Text}" Margin="5, 0" FontAttributes="Bold" />
+                                    <Label Grid.Row="1" Text="{Binding Created}" Margin="5, 0" FontSize="10" />
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Text="QR SCANNER" Command="{Binding QrCommand}" />
+
+    </Grid>
+    
+</ContentPage>

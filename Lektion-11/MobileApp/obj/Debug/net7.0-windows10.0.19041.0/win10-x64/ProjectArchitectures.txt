@@ -1,0 +1,1 @@
+C:\Users\HansMattin-Lassei\Documents\Utbildning\NET21\agila-arbetsmetoder\Lektion-11\MobileApp\MobileApp.csproj;x64
